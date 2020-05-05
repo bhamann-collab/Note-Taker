@@ -1,0 +1,25 @@
+{
+  "name": "Note-Taker",
+  "version": "1.0.0",
+  "description": "A web application that can be used to write, save and delete notes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhamann-collab/Note-Taker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhamann-collab/Note-Taker/issues"
+  },
+  "homepage": "https://github.com/bhamann-collab/Note-Taker#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  }
+}
