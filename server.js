@@ -8,6 +8,7 @@ const app = express()
 //Middleware
 app.use(bp.urlencoded({extended: false}))
 app.use(bp.json())
+app.use(express.static(__dirname + '/public'))
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
