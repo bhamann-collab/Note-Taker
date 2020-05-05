@@ -13,6 +13,10 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
 })
 
+app.get("/notes", (req, res) => {
+    res.sendFile(__dirname + '/public/notes.html')
+})
+
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`)
 })
