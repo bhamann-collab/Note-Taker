@@ -21,21 +21,23 @@ app.get("/notes", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     console.log("we posting bois")
-    var person = JSON.stringify({
-        "firstName": "John",
-        "lastName": "Doe",
-        "age": 50,
-        "eyeColor": "blue"
-      }, null, 2);
 
-      console.log(req.body)
+    console.log(req.body)
+    let currentObj = require('./db.json')
+    currentObj.push(req.body)
     
-    fs.writeFileSync('db.json', JSON.stringify(req.body, null, 2), 'utf8');
+    
+    fs.writeFileSync('db.json', JSON.stringify(currentObj, null, 2), 'utf8');
 
 })
 
 app.get("/api/notes", (req, res) => {
     console.log("we getting bois")
+    fs.readFile('./db.json','utf8', function read(err, data) {
+        console.log(data)
+        
+        res.json(JSON.parse(data))
+    })
 })
 
 app.listen(port, () => {
