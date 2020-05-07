@@ -22,19 +22,27 @@ app.get("/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
     console.log("we posting bois")
 
-    console.log(req.body)
-    let currentObj = require('./db.json')
-    currentObj.push(req.body)
+    let currentObj = require('./db.json');
+
+    let dbLength = currentObj.length;
+    req.body.id = dbLength + 1;
+
+    currentObj.push(req.body);
     
+
     
     fs.writeFileSync('db.json', JSON.stringify(currentObj, null, 2), 'utf8');
+
+    //updating the list
+    fs.readFile('./db.json','utf8', function read(err, data) {
+        res.json(JSON.parse(data));
+    })
 
 })
 
 app.get("/api/notes", (req, res) => {
     console.log("we getting bois")
     fs.readFile('./db.json','utf8', function read(err, data) {
-        console.log(data)
         
         res.json(JSON.parse(data))
     })
@@ -43,3 +51,5 @@ app.get("/api/notes", (req, res) => {
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`)
 })
+
+
