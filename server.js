@@ -48,6 +48,39 @@ app.get("/api/notes", (req, res) => {
     })
 })
 
+app.delete("/api/notes/:id", (req, res) => {
+    let idNum = parseInt(req.params.id);
+    let currentObj = require('./db.json');
+    //console.log(currentObj)
+  
+    if (currentObj.find(x => x.id === idNum) != undefined) {
+        console.log("yeah")
+
+        //Deleting the object
+        var index = currentObj.map(x => {
+            return x.id;
+        }).indexOf(idNum);
+
+        currentObj.splice(index, 1);
+        //console.log(currentObj)
+        //Deleting the object
+
+    }
+
+    // renumbering the id's
+    currentObj.forEach((currentObj, index) => currentObj.id = index + 1)
+    //console.log(currentObj)
+    // remunbering the id's
+
+    //Writing to JSON file
+    fs.writeFileSync('db.json', JSON.stringify(currentObj, null, 2), 'utf8');
+    //Writing to JSON file
+
+    fs.readFile('./db.json','utf8', function read(err, data) {
+        res.json(JSON.parse(data));
+    })
+})
+
 app.listen(port, () => {
     console.log(`Express server listening on port ${port}`)
 })
