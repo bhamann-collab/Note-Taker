@@ -20,20 +20,19 @@ app.get("/notes", (req, res) => {
 })
 
 app.post("/api/notes", (req, res) => {
-    console.log("we posting bois")
 
     let currentObj = require('./db.json');
 
+    //adding an id to the new object, the id's need to be sequential
     let dbLength = currentObj.length;
     req.body.id = dbLength + 1;
 
     currentObj.push(req.body);
     
-
-    
+    //entire db updated
     fs.writeFileSync('db.json', JSON.stringify(currentObj, null, 2), 'utf8');
 
-    //updating the list
+    //updating the list on the front end
     fs.readFile('./db.json','utf8', function read(err, data) {
         res.json(JSON.parse(data));
     })
@@ -41,7 +40,7 @@ app.post("/api/notes", (req, res) => {
 })
 
 app.get("/api/notes", (req, res) => {
-    console.log("we getting bois")
+    //updating the list on the front end
     fs.readFile('./db.json','utf8', function read(err, data) {
         
         res.json(JSON.parse(data))
@@ -51,10 +50,8 @@ app.get("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
     let idNum = parseInt(req.params.id);
     let currentObj = require('./db.json');
-    //console.log(currentObj)
   
     if (currentObj.find(x => x.id === idNum) != undefined) {
-        console.log("yeah")
 
         //Deleting the object
         var index = currentObj.map(x => {
@@ -62,20 +59,17 @@ app.delete("/api/notes/:id", (req, res) => {
         }).indexOf(idNum);
 
         currentObj.splice(index, 1);
-        //console.log(currentObj)
-        //Deleting the object
+        
 
     }
 
     // renumbering the id's
     currentObj.forEach((currentObj, index) => currentObj.id = index + 1)
-    //console.log(currentObj)
-    // remunbering the id's
 
     //Writing to JSON file
     fs.writeFileSync('db.json', JSON.stringify(currentObj, null, 2), 'utf8');
-    //Writing to JSON file
 
+    //updating the list on the front end
     fs.readFile('./db.json','utf8', function read(err, data) {
         res.json(JSON.parse(data));
     })
